@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To Do List</title>
+    <style>
+        .done {
+            text-decoration: line-through;
+        }
+
+       
+.btnClear:enabled {
+    opacity: 1;
+}       
+    </style>
+  </head>
+  <header>
+    <h1>To Do List</h1>
+  </header>
+  <main>
+    <div>
+      <input type="text" id="input" placeholder="введите новую задачу" />
+      <button id="btnAdd">Добавить задачу</button>
+    </div>
+    <div id ='newTask'>
+    </div>
+    <button id="btnClear" class="btnClear" disabled >Очистить список</button>
+    </main>
+  <script>
+    const btnAdd = document.getElementById("btnAdd");
+    const btnClear = document.getElementById("btnClear");
+    const newTask = document.getElementById("newTask");
+    const input = document.getElementById("input");
+    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+btnAdd.addEventListener("click", () => {
+   if (input.value === '') return //input.innerHTML = 'нет задач'
+    createTask(input.value);
+     input.value = '';
+       } 
+   )
+createTask =(value) => {
+const newInput = document.createElement('p');
+newInput.textContent = value;
+newTask.appendChild(newInput);
+const checkbox = document.createElement('input');
+checkbox.type = 'checkbox';
+newInput.appendChild(checkbox);
+checkbox.addEventListener ('change', () => {
+  newInput.classList.toggle('done');
+  btnClear.disabled = false;
+})
+btnClear.addEventListener('click', () => {
+    newTask.removeChild(newInput) })
+}
+
+
+    function saveTasks() {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }
+ 
+
+
+     
+  </script>
+</body>
+</html>
